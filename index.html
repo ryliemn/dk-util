@@ -4,18 +4,37 @@
     <script src="https://code.jquery.com/jquery-3.1.1.js"
             integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
             crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css"
           integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
 
-    <script src="dk-util.js" type="text/javascript"></script>
-
     <meta charset="UTF-8">
     <title>DK Util</title>
 </head>
 <body>
-    <input type="file" />
-    <svg class="chart"></svg>
+    <div id="dk-util">
+        <input type="file" v-on:change="newFile" />
+        <select v-model="selectedArtist">
+            <option v-for="artist in artists" :value="artist">{{ artist }}</option>
+        </select>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>{{ selectedArtist }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="month in incomeByArtistBySaleMonth[selectedArtist]">
+                    <td>{{ month.month }}</td>
+                    <td>{{ month.earnings }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="dk-util.js" type="text/javascript"></script>
 </body>
 </html>
